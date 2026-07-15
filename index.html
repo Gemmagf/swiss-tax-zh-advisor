@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="app.title">Assessor Fiscal Suís · Cantó de Zúric</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <h1 data-i18n="app.title">🇨🇭 Assessor Fiscal · Cantó de Zúric</h1>
+    <div class="topbar-actions">
+      <select id="langSwitcher" class="lang-switcher">
+        <option value="ca">Català</option>
+        <option value="es">Español</option>
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="it">Italiano</option>
+        <option value="el">Ελληνικά</option>
+        <option value="pl">Polski</option>
+        <option value="ru">Русский</option>
+      </select>
+      <button id="btnExport" class="btn btn-ghost" data-i18n="app.exportBtn">Exportar resum</button>
+      <button id="btnReset" class="btn btn-ghost btn-danger" data-i18n="app.resetBtn">Esborrar dades</button>
+    </div>
+  </div>
+</header>
+
+<div class="disclaimer" id="disclaimerBox">
+  <span data-i18n-html="app.disclaimer"></span>
+  <span id="dataYearNote"></span>
+</div>
+
+<main class="layout">
+
+  <nav class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="perfil"><span data-i18n="tabs.perfil">1. Perfil</span></button>
+    <button class="tab-btn" data-tab="ingressos"><span data-i18n="tabs.ingressos">2. Ingressos</span></button>
+    <button class="tab-btn" data-tab="professionals"><span data-i18n="tabs.professionals">3. Desp. professionals</span></button>
+    <button class="tab-btn" data-tab="assegurances"><span data-i18n="tabs.assegurances">4. Assegurances i 3a</span></button>
+    <button class="tab-btn" data-tab="familia"><span data-i18n="tabs.familia">5. Família i fills</span></button>
+    <button class="tab-btn" data-tab="altres"><span data-i18n="tabs.altres">6. Altres deduccions</span></button>
+    <button class="tab-btn" data-tab="resum"><span data-i18n="tabs.resum">7. Resum i checklist</span></button>
+    <button class="tab-btn" data-tab="glossary"><span data-i18n="tabs.glossary">8. Glossari oficial</span></button>
+  </nav>
+
+  <section class="content">
+
+    <!-- 1. PERFIL -->
+    <div class="tab-panel active" id="panel-perfil">
+      <h2 data-i18n="perfil.heading">Perfil fiscal</h2>
+      <div class="grid">
+        <label data-i18n="perfil.estatCivil.label">Estat civil
+          <select id="estatCivil">
+            <option value="solter" data-i18n="perfil.estatCivil.solter">Solter/a</option>
+            <option value="casat" data-i18n="perfil.estatCivil.casat">Casat/da o parella registrada (declaració conjunta)</option>
+          </select>
+        </label>
+        <label data-i18n="perfil.municipi.label">Municipi (per al multiplicador municipal, Steuerfuss)
+          <input type="text" id="municipi" data-i18n-placeholder="perfil.municipi.placeholder" placeholder="p. ex. Zúric, Winterthur, Uster...">
+        </label>
+        <label data-i18n="perfil.esglesia.label">Ets membre d'una església reconeguda (Kirchensteuer)?
+          <select id="esglesia">
+            <option value="no" data-i18n="perfil.esglesia.no">No</option>
+            <option value="si" data-i18n="perfil.esglesia.si">Sí</option>
+          </select>
+        </label>
+        <label data-i18n="perfil.numFills.label">Nombre de fills a càrrec
+          <input type="number" id="numFills" min="0" value="0">
+        </label>
+        <label data-i18n="perfil.dobleIngres.label">Els dos membres de la parella treballen? (rellevant per Zweitverdienerabzug)
+          <select id="dobleIngres">
+            <option value="no" data-i18n="perfil.dobleIngres.no">No / no aplica</option>
+            <option value="si" data-i18n="perfil.dobleIngres.si">Sí</option>
+          </select>
+        </label>
+      </div>
+      <p class="hint" data-i18n="perfil.hint">Aquestes dades determinen quines deduccions i llindars t'apliquen a les pestanyes següents.</p>
+      <div class="info-panel" id="info-perfil"></div>
+    </div>
+
+    <!-- 2. INGRESSOS -->
+    <div class="tab-panel" id="panel-ingressos">
+      <h2 data-i18n="ingressos.heading">Ingressos bruts anuals</h2>
+      <div class="grid">
+        <label data-i18n="ingressos.salariBrut.label">Salari brut anual (declarant) — casella salari del certificat salarial (Lohnausweis)
+          <input type="number" id="salariBrut" min="0" step="100" data-i18n-placeholder="ingressos.chfPlaceholder" placeholder="CHF">
+        </label>
+        <label data-i18n="ingressos.salariBrutConjuge.label">Salari brut anual (cònjuge, si declaració conjunta)
+          <input type="number" id="salariBrutConjuge" min="0" step="100" data-i18n-placeholder="ingressos.chfPlaceholder" placeholder="CHF">
+        </label>
+        <label data-i18n="ingressos.altresIngressos.label">Altres ingressos (lloguers, dividends, altres)
+          <input type="number" id="altresIngressos" min="0" step="100" data-i18n-placeholder="ingressos.chfPlaceholder" placeholder="CHF">
+        </label>
+      </div>
+      <p class="hint" data-i18n="ingressos.hint">Fes servir les xifres del teu Lohnausweis (certificat salarial) que et dona l'empresa. Si tens més d'una feina, suma-les aquí.</p>
+      <div class="info-panel" id="info-ingressos"></div>
+    </div>
+
+    <!-- 3. DESPESES PROFESSIONALS -->
+    <div class="tab-panel" id="panel-professionals">
+      <h2 data-i18n="professionals.heading">Despeses professionals (Berufskosten)</h2>
+
+      <fieldset>
+        <legend data-i18n="professionals.transport.legend">🚋 Transport (Fahrkosten)</legend>
+        <div class="grid">
+          <label data-i18n="professionals.transport.costTransportPublic.label">Cost anual de l'abonament de transport públic (SBB/ZVV/etc.)
+            <input type="number" id="costTransportPublic" min="0" step="10" data-i18n-placeholder="ingressos.chfPlaceholder" placeholder="CHF">
+          </label>
+          <label data-i18n="professionals.transport.usaCotxe.label">Vas en cotxe privat perquè NO hi ha transport públic raonable?
+            <select id="usaCotxe">
+              <option value="no" data-i18n="professionals.transport.usaCotxe.no">No</option>
+              <option value="si" data-i18n="professionals.transport.usaCotxe.si">Sí</option>
+            </select>
+          </label>
+          <label id="wrapKm" data-i18n="professionals.transport.kmAny.label">Km recorreguts (anada+tornada) x dies laborables a l'any
+            <input type="number" id="kmAny" min="0" step="10" data-i18n-placeholder="professionals.transport.kmAny.placeholder" placeholder="km/any">
+          </label>
+        </div>
+        <p class="hint" data-i18n="professionals.transport.hint">
+          A nivell federal el cost de desplaçament és deduïble fins a un màxim anual (vegeu resum).
+          A nivell cantonal ZH el límit pot ser diferent.
+        </p>
+      </fieldset>
+
+      <fieldset>
+        <legend data-i18n="professionals.dietes.legend">🍽️ Dietes / menjar fora de casa (Verpflegungsmehrkosten)</legend>
+        <div class="grid">
+          <label data-i18n="professionals.dietes.diesMenjarFora.label">Dies laborables l'any que mengeu fora de casa sense cantina subvencionada
+            <input type="number" id="diesMenjarFora" min="0" max="260" step="1" data-i18n-placeholder="professionals.dietes.diesMenjarFora.placeholder" placeholder="dies/any">
+          </label>
+          <label data-i18n="professionals.dietes.teCantina.label">La teva empresa té cantina o et subvenciona el menjar?
+            <select id="teCantina">
+              <option value="no" data-i18n="professionals.dietes.teCantina.no">No</option>
+              <option value="si" data-i18n="professionals.dietes.teCantina.si">Sí (deducció reduïda a la meitat)</option>
+            </select>
+          </label>
+        </div>
+        <p class="hint" data-i18n="professionals.dietes.hint">S'aplica un import fix per dia. Si tens cantina subvencionada, la deducció diària es redueix a la meitat.</p>
+      </fieldset>
+
+      <fieldset>
+        <legend data-i18n="professionals.formacio.legend">🎓 Formació contínua i altres despeses professionals</legend>
+        <div class="grid">
+          <label data-i18n="professionals.formacio.formacio.label">Despeses de formació contínua relacionada amb la feina (cursos, material)
+            <input type="number" id="formacio" min="0" step="10" data-i18n-placeholder="ingressos.chfPlaceholder" placeholder="CHF">
+          </label>
+          <label data-i18n="professionals.formacio.altresProfessionals.label">Altres despeses professionals efectives (roba de treball, eines, despatx a casa...) — només si superen el % fix
+            <input type="number" id="altresProfessionals" min="0" step="10" data-i18n-placeholder="ingressos.chfPlaceholder" placeholder="CHF">
+          </label>
+        </div>
+        <p class="hint" data-i18n="professionals.formacio.hint">Per defecte s'aplica una deducció fixa (Pauschalabzug) sobre el salari brut. Només val la pena declarar despeses efectives si superen aquest fix.</p>
+      </fieldset>
+      <div class="info-panel" id="info-professionals"></div>
+    </div>
+
+    <!-- 4. ASSEGURANCES I 3a -->
+    <div class="tab-panel" id="panel-assegurances">
+      <h2 data-i18n="assegurances.heading">Assegurances i previsió (Pilar 3a)</h2>
+      <div class="grid">
+        <label data-i18n="assegurances.tePensionskasse.label">Ets afiliat a un fons de pensions (Pensionskasse / 2n pilar) via la feina?
+          <select id="tePensionskasse">
+            <option value="si" data-i18n="assegurances.tePensionskasse.si">Sí</option>
+            <option value="no" data-i18n="assegurances.tePensionskasse.no">No (autònom sense 2n pilar)</option>
+          </select>
+        </label>
+        <label data-i18n="assegurances.pilar3a.label">Aportació anual al Pilar 3a (compte o assegurança de previsió vinculada)
+          <input type="number" id="pilar3a" min="0" step="10" data-i18n-placeholder="ingressos.chfPlaceholder" placeholder="CHF">
+        </label>
+        <label data-i18n="assegurances.einkaufPK.label">Rescat voluntari (Einkauf) a la caixa de pensions aquest any
+          <input type="number" id="einkaufPK" min="0" step="10" data-i18n-placeholder="ingressos.chfPlaceholder" placeholder="CHF">
+        </label>
+        <label data-i18n="assegurances.primaSalut.label">Primes anuals d'assegurança de malaltia i accidents (KVG/LAMal) — declarant
+          <input type="number" id="primaSalut" min="0" step="10" data-i18n-placeholder="ingressos.chfPlaceholder" placeholder="CHF">
+        </label>
+        <label data-i18n="assegurances.primaVida.label">Primes d'assegurança de vida / altres assegurances privades deduïbles
+          <input type="number" id="primaVida" min="0" step="10" data-i18n-placeholder="ingressos.chfPlaceholder" placeholder="CHF">
+        </label>
+        <label data-i18n="assegurances.interessosEstalvi.label">Interessos generats per estalvis (compte estalvi, etc.)
+          <input type="number" id="interessosEstalvi" min="0" step="10" data-i18n-placeholder="ingressos.chfPlaceholder" placeholder="CHF">
+        </label>
+      </div>
+      <p class="hint" data-i18n="assegurances.hint">El pilar 3a és una de les deduccions més potents. Les primes de salut/vida es dedueixen fins a un sostre fix.</p>
+      <div class="info-panel" id="info-assegurances"></div>
+    </div>
+
+    <!-- 5. FAMILIA -->
+    <div class="tab-panel" id="panel-familia">
+      <h2 data-i18n="familia.heading">Família i fills</h2>
+      <div class="grid">
+        <label data-i18n="familia.despesesGuarderia.label">Despeses de guarderia / cangur per fills menors de 14 anys, mentre treballes o estudies
+          <input type="number" id="despesesGuarderia" min="0" step="10" data-i18n-placeholder="familia.chfAnyPlaceholder" placeholder="CHF/any">
+        </label>
+        <label data-i18n="familia.pensioAlimentaria.label">Pensió alimentària pagada (a l'altre progenitor)
+          <input type="number" id="pensioAlimentaria" min="0" step="10" data-i18n-placeholder="familia.chfAnyPlaceholder" placeholder="CHF/any">
+        </label>
+      </div>
+      <p class="hint" data-i18n="familia.hint">La deducció per fills (Kinderabzug) i la deducció personal ja s'apliquen automàticament segons el nombre de fills i l'estat civil indicats a la pestanya 1.</p>
+      <div class="info-panel" id="info-familia"></div>
+    </div>
+
+    <!-- 6. ALTRES -->
+    <div class="tab-panel" id="panel-altres">
+      <h2 data-i18n="altres.heading">Altres deduccions</h2>
+      <div class="grid">
+        <label data-i18n="altres.donacions.label">Donacions a entitats amb finalitat pública/benèfica reconegudes
+          <input type="number" id="donacions" min="0" step="10" data-i18n-placeholder="familia.chfAnyPlaceholder" placeholder="CHF/any">
+        </label>
+        <label data-i18n="altres.interessosDeute.label">Interessos de deutes privats pagats (hipoteca privada, préstecs, targetes)
+          <input type="number" id="interessosDeute" min="0" step="10" data-i18n-placeholder="familia.chfAnyPlaceholder" placeholder="CHF/any">
+        </label>
+        <label data-i18n="altres.despesesMediques.label">Despeses mèdiques i dentals no cobertes per l'assegurança (pròpies, no reemborsades)
+          <input type="number" id="despesesMediques" min="0" step="10" data-i18n-placeholder="familia.chfAnyPlaceholder" placeholder="CHF/any">
+        </label>
+      </div>
+      <p class="hint" data-i18n="altres.hint">Les despeses mèdiques només són deduïbles per la part que supera un percentatge del teu ingrés net. Les donacions han de superar un import mínim anual.</p>
+      <div class="info-panel" id="info-altres"></div>
+    </div>
+
+    <!-- 7. RESUM -->
+    <div class="tab-panel" id="panel-resum">
+      <h2 data-i18n="resum.heading">Resum i checklist de documents</h2>
+      <div id="resumContingut"></div>
+    </div>
+
+    <!-- 8. GLOSSARI -->
+    <div class="tab-panel" id="panel-glossary">
+      <h2 data-i18n="tabs.glossary">Glossari oficial</h2>
+      <p class="hint" data-i18n="glossaryIntro">El formulari oficial de Zúric (paper o ZHprivateTax) és sempre en alemany. Aquesta taula tradueix els termes clau perquè puguis localitzar la casella correcta.</p>
+      <div id="glossaryContingut"></div>
+    </div>
+
+  </section>
+
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <h3 data-i18n="sidebar.totalsTitle">Totals en directe</h3>
+      <div class="totrow"><span data-i18n="sidebar.totIngressos">Ingressos bruts totals</span><strong id="totIngressos">CHF 0</strong></div>
+      <div class="totrow"><span data-i18n="sidebar.totDeduccions">Total deduccions estimades</span><strong id="totDeduccions">CHF 0</strong></div>
+      <div class="totrow highlight"><span data-i18n="sidebar.totImposable">Ingrés imposable estimat</span><strong id="totImposable">CHF 0</strong></div>
+      <p class="sidebar-hint" data-i18n="sidebar.hint">Estimació simplificada, sense aplicar la corba real de tipus impositius.</p>
+    </div>
+    <div class="sidebar-card">
+      <h3 data-i18n="sidebar.desglosTitle">Desglossament de deduccions</h3>
+      <ul id="desglossList" class="desglos-list"></ul>
+    </div>
+  </aside>
+
+</main>
+
+<footer class="footer" data-i18n="app.footer">
+  Eina personal no oficial · Cantó de Zúric · Dades locals al teu navegador
+</footer>
+
+<script src="assets/i18n/ca.js"></script>
+<script src="assets/i18n/es.js"></script>
+<script src="assets/i18n/en.js"></script>
+<script src="assets/i18n/fr.js"></script>
+<script src="assets/i18n/de.js"></script>
+<script src="assets/i18n/it.js"></script>
+<script src="assets/i18n/el.js"></script>
+<script src="assets/i18n/pl.js"></script>
+<script src="assets/i18n/ru.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
