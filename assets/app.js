@@ -14,8 +14,8 @@ const CONST = {
     zhPct: 0.03, zhMin: 2000, zhMax: 4000,
     fedPct: 0.03, fedMin: 2000, fedMax: 4000,
   },
-  fahrkostenFedMax: 3200,
-  fahrkostenZhMax: 5000,
+  fahrkostenFedMax: 3300,
+  fahrkostenZhMax: 5200,
 
   dietaDiaSenseCantina: 15,
   dietaDiaAmbCantina: 7.5,
@@ -25,13 +25,22 @@ const CONST = {
   kmRate: 0.70,
   kmMaxAny: 6000,
 
+  formacioMaxZh: 12400,
+  formacioMaxFed: 13000,
+
   pilar3aAmbPK: 7258,
   pilar3aSensePK_pct: 0.20,
   pilar3aSensePK_max: 36288,
 
+  // Font: formulari oficial "Versicherungsprämien 2025" (StA Form 365), secció B —
+  // el sostre depèn de si s'han fet aportacions al 2n o 3r pilar.
   assegurances: {
-    zhSolter: 2700, zhCasat: 5550, zhPerFill: 700,
-    fedSolter: 1800, fedCasat: 3600, fedPerFill: 700,
+    zhCasatAmbPK: 5800, zhCasatSensePK: 8700,
+    zhSolterAmbPK: 2900, zhSolterSensePK: 4350,
+    zhPerFill: 1300,
+    fedCasatAmbPK: 3700, fedCasatSensePK: 5550,
+    fedSolterAmbPK: 1800, fedSolterSensePK: 2700,
+    fedPerFill: 700,
   },
 
   kinderabzug: { zh: 9300, fed: 6600 },
@@ -118,6 +127,7 @@ function applyI18n(){
 
   ["perfil","ingressos","professionals","assegurances","familia","altres"].forEach(renderInfoPanel);
   renderGlossary();
+  if(appMode === "guided") updateWizardBar();
   render();
 }
 
@@ -207,8 +217,56 @@ function setupTabs(){
       document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
       btn.classList.add("active");
       $("panel-" + btn.dataset.tab).classList.add("active");
+      wizardStep = PANEL_ORDER.indexOf(btn.dataset.tab);
     });
   });
+}
+
+// ---------- Guided wizard mode ----------
+const PANEL_ORDER = ["perfil","ingressos","professionals","assegurances","familia","altres","resum","glossary"];
+const MODE_STORAGE_KEY = "swissTaxMode";
+let wizardStep = 0;
+let appMode = "guided";
+
+function showPanel(key){
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === key));
+  document.querySelectorAll(".tab-panel").forEach(p => p.classList.toggle("active", p.id === "panel-" + key));
+}
+
+function updateWizardBar(){
+  const total = PANEL_ORDER.length;
+  const pct = Math.round(((wizardStep + 1) / total) * 100);
+  $("wizardProgressFill").style.width = pct + "%";
+  $("wizardStepLabel").textContent = t("wizard.stepOf", {current: wizardStep + 1, total});
+  $("btnWizardBack").disabled = wizardStep === 0;
+  const isLast = wizardStep === total - 1;
+  $("btnWizardNext").textContent = isLast ? t("wizard.finish") : t("wizard.next");
+  $("btnWizardNext").disabled = isLast;
+}
+
+function goToWizardStep(idx){
+  wizardStep = Math.max(0, Math.min(PANEL_ORDER.length - 1, idx));
+  showPanel(PANEL_ORDER[wizardStep]);
+  updateWizardBar();
+  window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+function setMode(mode){
+  appMode = mode;
+  localStorage.setItem(MODE_STORAGE_KEY, mode);
+  $("btnGuidedMode").classList.toggle("active", mode === "guided");
+  $("btnTabsMode").classList.toggle("active", mode === "tabs");
+  $("tabs").style.display = mode === "tabs" ? "" : "none";
+  $("wizardBar").style.display = mode === "guided" ? "" : "none";
+  $("wizardNav").style.display = mode === "guided" ? "flex" : "none";
+  if(mode === "guided") goToWizardStep(wizardStep);
+}
+
+function setupWizard(){
+  $("btnGuidedMode").addEventListener("click", () => setMode("guided"));
+  $("btnTabsMode").addEventListener("click", () => setMode("tabs"));
+  $("btnWizardBack").addEventListener("click", () => goToWizardStep(wizardStep - 1));
+  $("btnWizardNext").addEventListener("click", () => goToWizardStep(wizardStep + 1));
 }
 
 // ---------- Calculation ----------
@@ -236,7 +294,10 @@ function calcDeduccions(){
   const dietaMaxAny = ambCantina ? CONST.dietaMaxAnyAmbCantina : CONST.dietaMaxAnySenseCantina;
   const dietes = Math.min(num("diesMenjarFora") * dietaDia, dietaMaxAny);
 
-  const formacio = num("formacio");
+  const formacioRaw = num("formacio");
+  const formacio = Math.min(formacioRaw, CONST.formacioMaxZh);
+  const formacioFedDeductible = Math.min(formacioRaw, CONST.formacioMaxFed);
+  const formacioExces = Math.max(0, formacioRaw - CONST.formacioMaxZh);
   const altresProf = num("altresProfessionals");
 
   const totalProfessionals = pauschalBerufskosten + transport + dietes + formacio + altresProf;
@@ -250,8 +311,11 @@ function calcDeduccions(){
   const einkaufPK = num("einkaufPK");
 
   const primaAssegurances = num("primaSalut") + num("primaVida");
-  const sostreAsseg = (casat ? CONST.assegurances.zhCasat : CONST.assegurances.zhSolter)
-    + nFills * CONST.assegurances.zhPerFill;
+  const teAportacionsPK3a = str("tePensionskasse") === "si" || pilar3aAportat > 0;
+  const sostreAssegBase = casat
+    ? (teAportacionsPK3a ? CONST.assegurances.zhCasatAmbPK : CONST.assegurances.zhCasatSensePK)
+    : (teAportacionsPK3a ? CONST.assegurances.zhSolterAmbPK : CONST.assegurances.zhSolterSensePK);
+  const sostreAsseg = sostreAssegBase + nFills * CONST.assegurances.zhPerFill;
   const assegurancesDeduible = Math.min(primaAssegurances, sostreAsseg);
   const interessosEstalvi = num("interessosEstalvi");
 
@@ -278,7 +342,8 @@ function calcDeduccions(){
 
   return {
     casat, nFills, salariTotal, ingressosBrutTotal,
-    pauschalBerufskosten, transport, transportFedDeductible, dietes, dietaDia, formacio, altresProf, totalProfessionals,
+    pauschalBerufskosten, transport, transportFedDeductible, dietes, dietaDia,
+    formacio, formacioFedDeductible, formacioExces, altresProf, totalProfessionals,
     pilar3aMax, pilar3aAportat, pilar3aDeduible, pilar3aExces, einkaufPK,
     primaAssegurances, sostreAsseg, assegurancesDeduible, interessosEstalvi,
     guarderia, pensioAlimentaria, kinderabzugTotal,
@@ -332,6 +397,10 @@ function renderResum(c){
       )}</p>`
     : "";
 
+  const avisFormacio = c.formacioExces > 0
+    ? `<p class="hint">${escapeHtml(t("resum.avisFormacio", {max: fmt(CONST.formacioMaxZh), exces: fmt(c.formacioExces)}))}</p>`
+    : "";
+
   const checklist = buildChecklist(c);
   const rows = t("resum.rows");
   const howTo = t("resum.howToFile");
@@ -347,6 +416,7 @@ function renderResum(c){
       </table>
       ${avisPilar3a}
       ${avisTransport}
+      ${avisFormacio}
     </div>
 
     <div class="resum-section">
@@ -477,6 +547,7 @@ function setLang(lang){
 function init(){
   currentLang = localStorage.getItem(LANG_STORAGE_KEY) || detectDefaultLang();
   setupTabs();
+  setupWizard();
   applyState(loadState());
   FIELDS.forEach(id => {
     const el = $(id);
@@ -486,6 +557,7 @@ function init(){
   $("btnReset").addEventListener("click", resetAll);
   $("langSwitcher").addEventListener("change", (e) => setLang(e.target.value));
   setLang(currentLang);
+  setMode(localStorage.getItem(MODE_STORAGE_KEY) || "guided");
 }
 
 document.addEventListener("DOMContentLoaded", init);

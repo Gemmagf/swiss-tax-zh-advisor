@@ -22,6 +22,15 @@ window.I18N.pl = {
     glossary: "8. Oficjalny słowniczek",
   },
 
+  wizard: {
+    guidedMode: "🧭 Tryb prowadzony (krok po kroku)",
+    allTabsMode: "📑 Wszystkie zakładki",
+    stepOf: "Krok {current} z {total}",
+    back: "◀ Wstecz",
+    next: "Dalej ▶",
+    finish: "✅ Gotowe",
+  },
+
   glossaryIntro: "Oficjalny formularz podatkowy kantonu Zurych (papierowy lub ZHprivateTax) jest zawsze w języku niemieckim. Ta tabela tłumaczy kluczowe terminy, abyś mógł/mogła zlokalizować właściwe pole w prawdziwym formularzu.",
 
   sidebar: {
@@ -232,6 +241,7 @@ window.I18N.pl = {
     avisPilar3a: "⚠️ Wprowadzono {aportat} na Filar 3a, ale maksymalna kwota podlegająca odliczeniu w Twoim przypadku to {max}. Nadwyżka {exces} nie podlega odliczeniu.",
     avisTransportZhCap: "⚠️ Na poziomie federalnym koszt transportu podlega odliczeniu tylko do {fedMax}/rok; na poziomie kantonalnym ZH pułap wynosi {zhMax}/rok.",
     avisTransportZhReal: "⚠️ Na poziomie federalnym koszt transportu podlega odliczeniu tylko do {fedMax}/rok; na poziomie kantonalnym ZH możesz odliczyć rzeczywisty koszt ({real}) do pułapu {zhMax}/rok.",
+    avisFormacio: "⚠️ Koszty kształcenia ustawicznego podlegają odliczeniu tylko do {max} na osobę (źródło: formularz urzędowy). Nadwyżka w wysokości {exces} nie podlega odliczeniu.",
     detallTitle: "Szczegóły według pola formularza (orientacyjnie)",
     casellaCol: "Typowe pole (Ziffer)",
     importDeclararCol: "Kwota do zadeklarowania",

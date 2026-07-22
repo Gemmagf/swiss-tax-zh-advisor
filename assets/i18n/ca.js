@@ -22,6 +22,15 @@ window.I18N.ca = {
     glossary: "8. Glossari oficial",
   },
 
+  wizard: {
+    guidedMode: "🧭 Mode guiat (pas a pas)",
+    allTabsMode: "📑 Totes les pestanyes",
+    stepOf: "Pas {current} de {total}",
+    back: "◀ Enrere",
+    next: "Següent ▶",
+    finish: "✅ Fet",
+  },
+
   glossaryIntro: "El formulari oficial de Zúric (paper o ZHprivateTax) és sempre en alemany. Aquesta taula tradueix els termes clau perquè puguis localitzar la casella correcta al formulari real.",
 
   sidebar: {
@@ -232,6 +241,7 @@ window.I18N.ca = {
     avisPilar3a: "⚠️ Has introduït {aportat} al Pilar 3a, però el màxim deduïble per al teu cas és {max}. L'excés de {exces} no és deduïble.",
     avisTransportZhCap: "⚠️ A nivell federal el cost de transport només és deduïble fins a {fedMax}/any; a nivell cantonal ZH el sostre és {zhMax}/any.",
     avisTransportZhReal: "⚠️ A nivell federal el cost de transport només és deduïble fins a {fedMax}/any; a nivell cantonal ZH pots deduir el cost real ({real}) fins a un sostre de {zhMax}/any.",
+    avisFormacio: "⚠️ Les despeses de formació contínua només són deduïbles fins a {max} per persona (font: formulari oficial). L'excés de {exces} no és deduïble.",
     detallTitle: "Detall per casella del formulari (orientatiu)",
     casellaCol: "Casella típica (Ziffer)",
     importDeclararCol: "Import a declarar",

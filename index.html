@@ -36,6 +36,11 @@
 
 <main class="layout">
 
+  <div class="mode-toggle">
+    <button id="btnGuidedMode" class="mode-btn active" data-i18n="wizard.guidedMode">🧭 Mode guiat (pas a pas)</button>
+    <button id="btnTabsMode" class="mode-btn" data-i18n="wizard.allTabsMode">📑 Totes les pestanyes</button>
+  </div>
+
   <nav class="tabs" id="tabs">
     <button class="tab-btn active" data-tab="perfil"><span data-i18n="tabs.perfil">1. Perfil</span></button>
     <button class="tab-btn" data-tab="ingressos"><span data-i18n="tabs.ingressos">2. Ingressos</span></button>
@@ -46,6 +51,13 @@
     <button class="tab-btn" data-tab="resum"><span data-i18n="tabs.resum">7. Resum i checklist</span></button>
     <button class="tab-btn" data-tab="glossary"><span data-i18n="tabs.glossary">8. Glossari oficial</span></button>
   </nav>
+
+  <div class="wizard-bar" id="wizardBar">
+    <div class="wizard-progress">
+      <div class="wizard-progress-track"><div class="wizard-progress-fill" id="wizardProgressFill"></div></div>
+      <span id="wizardStepLabel"></span>
+    </div>
+  </div>
 
   <section class="content">
 
@@ -231,6 +243,11 @@
       <h2 data-i18n="tabs.glossary">Glossari oficial</h2>
       <p class="hint" data-i18n="glossaryIntro">El formulari oficial de Zúric (paper o ZHprivateTax) és sempre en alemany. Aquesta taula tradueix els termes clau perquè puguis localitzar la casella correcta.</p>
       <div id="glossaryContingut"></div>
+    </div>
+
+    <div class="wizard-nav" id="wizardNav">
+      <button id="btnWizardBack" class="btn btn-outline" data-i18n="wizard.back">◀ Enrere</button>
+      <button id="btnWizardNext" class="btn btn-primary" data-i18n="wizard.next">Següent ▶</button>
     </div>
 
   </section>

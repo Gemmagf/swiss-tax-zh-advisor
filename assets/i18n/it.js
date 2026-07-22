@@ -22,6 +22,15 @@ window.I18N.it = {
     glossary: "8. Glossario ufficiale",
   },
 
+  wizard: {
+    guidedMode: "🧭 Modalità guidata (passo dopo passo)",
+    allTabsMode: "📑 Tutte le schede",
+    stepOf: "Passo {current} di {total}",
+    back: "◀ Indietro",
+    next: "Avanti ▶",
+    finish: "✅ Fatto",
+  },
+
   glossaryIntro: "Il modulo ufficiale di Zurigo (cartaceo o ZHprivateTax) è sempre in tedesco. Questa tabella traduce i termini chiave affinché tu possa individuare la casella corretta nel modulo reale.",
 
   sidebar: {
@@ -232,6 +241,7 @@ window.I18N.it = {
     avisPilar3a: "⚠️ Hai inserito {aportat} nel Pilastro 3a, ma il massimo deducibile per il tuo caso è {max}. L'eccedenza di {exces} non è deducibile.",
     avisTransportZhCap: "⚠️ A livello federale il costo di trasporto è deducibile solo fino a {fedMax}/anno; a livello cantonale ZH il tetto è {zhMax}/anno.",
     avisTransportZhReal: "⚠️ A livello federale il costo di trasporto è deducibile solo fino a {fedMax}/anno; a livello cantonale ZH puoi dedurre il costo reale ({real}) fino a un tetto di {zhMax}/anno.",
+    avisFormacio: "⚠️ Le spese di formazione continua sono deducibili solo fino a {max} per persona (fonte: modulo ufficiale). L'eccedenza di {exces} non è deducibile.",
     detallTitle: "Dettaglio per casella del modulo (orientativo)",
     casellaCol: "Casella tipica (Ziffer)",
     importDeclararCol: "Importo da dichiarare",

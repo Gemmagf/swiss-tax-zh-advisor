@@ -22,6 +22,15 @@ window.I18N.en = {
     glossary: "8. Official glossary",
   },
 
+  wizard: {
+    guidedMode: "🧭 Guided mode (step by step)",
+    allTabsMode: "📑 All tabs",
+    stepOf: "Step {current} of {total}",
+    back: "◀ Back",
+    next: "Next ▶",
+    finish: "✅ Done",
+  },
+
   glossaryIntro: "The official Zürich tax form (paper or ZHprivateTax) is always in German. This table translates the key terms so you can locate the right box on the real form.",
 
   sidebar: {
@@ -232,6 +241,7 @@ window.I18N.en = {
     avisPilar3a: "⚠️ You entered {aportat} for Pillar 3a, but the maximum deductible in your case is {max}. The excess of {exces} is not deductible.",
     avisTransportZhCap: "⚠️ At the federal level, transport costs are only deductible up to {fedMax}/year; at the ZH cantonal level, the cap is {zhMax}/year.",
     avisTransportZhReal: "⚠️ At the federal level, transport costs are only deductible up to {fedMax}/year; at the ZH cantonal level, you can deduct the actual cost ({real}) up to a cap of {zhMax}/year.",
+    avisFormacio: "⚠️ Continuing-education expenses are only deductible up to {max} per person (source: official form). The excess of {exces} is not deductible.",
     detallTitle: "Breakdown by form box (approximate)",
     casellaCol: "Typical box (Ziffer)",
     importDeclararCol: "Amount to declare",

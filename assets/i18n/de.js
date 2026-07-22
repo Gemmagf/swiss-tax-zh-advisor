@@ -22,6 +22,15 @@ window.I18N.de = {
     glossary: "8. Offizielles Glossar",
   },
 
+  wizard: {
+    guidedMode: "🧭 Geführter Modus (Schritt für Schritt)",
+    allTabsMode: "📑 Alle Register",
+    stepOf: "Schritt {current} von {total}",
+    back: "◀ Zurück",
+    next: "Weiter ▶",
+    finish: "✅ Fertig",
+  },
+
   glossaryIntro: "Das offizielle Zürcher Steuerformular (Papierform oder ZHprivateTax) ist stets auf Deutsch. Diese Tabelle erläutert die wichtigsten Begriffe, damit du die richtige Ziffer im echten Formular findest.",
 
   sidebar: {
@@ -232,6 +241,7 @@ window.I18N.de = {
     avisPilar3a: "⚠️ Du hast {aportat} in die Säule 3a eingezahlt, doch der für dich maximal abziehbare Betrag ist {max}. Der übersteigende Betrag von {exces} ist nicht abziehbar.",
     avisTransportZhCap: "⚠️ Auf Bundesebene sind Fahrkosten nur bis {fedMax}/Jahr abziehbar; auf kantonaler Ebene ZH liegt der Höchstbetrag bei {zhMax}/Jahr.",
     avisTransportZhReal: "⚠️ Auf Bundesebene sind Fahrkosten nur bis {fedMax}/Jahr abziehbar; auf kantonaler Ebene ZH kannst du die effektiven Kosten ({real}) bis zu einem Höchstbetrag von {zhMax}/Jahr abziehen.",
+    avisFormacio: "⚠️ Weiterbildungskosten sind nur bis {max} pro Person abzugsfähig (Quelle: offizielles Formular). Der übersteigende Betrag von {exces} ist nicht abzugsfähig.",
     detallTitle: "Detail nach Formularziffer (orientierend)",
     casellaCol: "Übliche Ziffer",
     importDeclararCol: "Zu deklarierender Betrag",

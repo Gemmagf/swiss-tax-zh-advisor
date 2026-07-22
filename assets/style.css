@@ -98,6 +98,86 @@ body{
   border-color:var(--red);
 }
 
+.mode-toggle{
+  grid-column:1 / -1;
+  display:flex;
+  gap:8px;
+  margin-bottom:10px;
+}
+.mode-btn{
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:.82rem;
+  color:var(--muted);
+  font-weight:600;
+}
+.mode-btn.active{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
+
+.wizard-bar{
+  grid-column:1 / -1;
+  margin-bottom:8px;
+}
+.wizard-progress{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.wizard-progress-track{
+  flex:1;
+  height:6px;
+  background:var(--border);
+  border-radius:4px;
+  overflow:hidden;
+}
+.wizard-progress-fill{
+  height:100%;
+  background:var(--accent);
+  width:12.5%;
+  transition:width .2s ease;
+}
+#wizardStepLabel{
+  font-size:.8rem;
+  color:var(--muted);
+  white-space:nowrap;
+  font-weight:600;
+}
+
+.wizard-nav{
+  display:none;
+  justify-content:space-between;
+  margin-top:24px;
+  padding-top:16px;
+  border-top:1px solid var(--border);
+}
+.wizard-nav .btn-outline{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text);
+}
+.wizard-nav .btn-primary{
+  background:var(--red);
+  border:1px solid var(--red);
+  color:#fff;
+}
+.wizard-nav button{
+  padding:10px 20px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:.9rem;
+  font-weight:600;
+}
+.wizard-nav button:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+
 .content{
   background:var(--card);
   border:1px solid var(--border);

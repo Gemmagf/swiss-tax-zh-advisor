@@ -22,6 +22,15 @@ window.I18N.fr = {
     glossary: "8. Glossaire officiel",
   },
 
+  wizard: {
+    guidedMode: "🧭 Mode guidé (pas à pas)",
+    allTabsMode: "📑 Tous les onglets",
+    stepOf: "Étape {current} sur {total}",
+    back: "◀ Précédent",
+    next: "Suivant ▶",
+    finish: "✅ Terminé",
+  },
+
   glossaryIntro: "Le formulaire officiel de Zurich (papier ou ZHprivateTax) est toujours en allemand. Ce tableau traduit les termes clés pour que vous puissiez localiser la bonne case dans le formulaire réel.",
 
   sidebar: {
@@ -232,6 +241,7 @@ window.I18N.fr = {
     avisPilar3a: "⚠️ Vous avez saisi {aportat} au Pilier 3a, mais le maximum déductible dans votre cas est {max}. L'excédent de {exces} n'est pas déductible.",
     avisTransportZhCap: "⚠️ Au niveau fédéral, le coût du transport n'est déductible que jusqu'à {fedMax}/an ; au niveau cantonal ZH, le plafond est de {zhMax}/an.",
     avisTransportZhReal: "⚠️ Au niveau fédéral, le coût du transport n'est déductible que jusqu'à {fedMax}/an ; au niveau cantonal ZH, vous pouvez déduire le coût réel ({real}) jusqu'à un plafond de {zhMax}/an.",
+    avisFormacio: "⚠️ Les frais de formation continue ne sont déductibles que jusqu'à {max} par personne (source : formulaire officiel). L'excédent de {exces} n'est pas déductible.",
     detallTitle: "Détail par case du formulaire (indicatif)",
     casellaCol: "Case typique (Ziffer)",
     importDeclararCol: "Montant à déclarer",
